@@ -46,7 +46,31 @@ RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> /home/ubunt
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-# ------------------------------------------------------------
+{%- if cookiecutter.use_julia == 'yes' -%}
+
+# Install Julia
+
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz \
+    -O $HOME/julia-1.4.2-linux-x86_64.tar.gz && \
+    cd $HOME && \
+    tar -xvzf julia-1.4.2-linux-x86_64.tar.gz
+ENV PATH $HOME/julia-1.4.2/bin:$PATH
+
+# Install Julia packages
+
+RUN julia -e 'using Pkg; Pkg.add(["IJulia"]); using IJulia'
+RUN sudo apt-get install -y build-essential
+RUN julia -e 'using Pkg; Pkg.add(["PackageCompiler"]); using PackageCompiler'
+RUN sudo apt-get install -y qt5-default
+RUN julia -e 'using Pkg; Pkg.add(["UnicodePlots", "GR", "Plots"]); \
+              using UnicodePlots, GR, Plots'
+RUN julia -e 'using Pkg; Pkg.add(["Distributions"]); using Distributions'
+RUN julia -e 'using Pkg; Pkg.add(["LinearAlgebra"]); using LinearAlgebra'
+RUN julia -e 'using Pkg; Pkg.add(["PDMats"]); using PDMats'
+
+{%- endif %}
+
+# Install Python packages
 
 RUN pip install tensorboard
 
