@@ -7,7 +7,7 @@ FROM ubuntu:16.04
 MAINTAINER Satoshi Murashige
 
 RUN apt-get -y update --fix-missing && apt-get -y upgrade
-RUN apt-get install -y sudo wget bzip2 git vim cmake
+RUN apt-get -y install sudo wget bzip2 git vim cmake
 
 # settings
 ARG user_name=ubuntu
