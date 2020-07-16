@@ -1,4 +1,8 @@
+{%- if cookiecutter.use_nvidia_docker == 'yes' -%}
 FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+{%- else -%}
+FROM ubuntu:16.04
+{%- endif -%}
 MAINTAINER Satoshi Murashige
 
 RUN apt-get -y update --fix-missing && apt-get -y upgrade
