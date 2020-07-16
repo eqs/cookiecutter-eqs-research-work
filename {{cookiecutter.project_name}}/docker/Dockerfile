@@ -6,8 +6,7 @@ FROM ubuntu:16.04
 MAINTAINER Satoshi Murashige
 
 RUN apt-get -y update --fix-missing && apt-get -y upgrade
-RUN apt-get install -y sudo wget bzip2 git vim cmake xserver-xorg-dev libgl1-mesa-dev unzip gcc g++ && \
-    apt-get install -y x11-apps
+RUN apt-get install -y sudo wget bzip2 git vim cmake
 
 # settings
 ARG user_name=ubuntu
@@ -36,40 +35,16 @@ RUN sudo bash -c "echo 'export PATH=/home/${user_name}/anaconda3/bin:$PATH' N> /
     rm $HOME/anaconda.sh
 
 ENV PATH $HOME/anaconda3/bin:$PATH
-
-ENV LD_LIBRARY_PATH /usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/extras/CUPTI/lib64:$LD_LIBRARY_PATH
-
-# ------------------------------------------------------------
+ENV LD_LIBRARY_PATH /usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 
 WORKDIR /work
-
-RUN sudo apt-get install -y protobuf-compiler
-RUN sudo apt-get install -y ffmpeg
-RUN sudo apt-get install -y pkg-config
-
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> /home/ubuntu/.bashrc
-
-# ------------------------------------------------------------
-# Install Python packages
-# ------------------------------------------------------------
-
-RUN pip install future six tensorboardX
-RUN pip install --upgrade --force-reinstall matplotlib
-
-RUN pip install tensorflow tensorflow-gpu
-RUN pip install tensorboard
-
-RUN conda install -c pytorch pytorch torchvision
-RUN conda install cudnn
-
-RUN pip install opencv-python
-
-RUN pip install chainer chainercv
-RUN conda install -c pytorch pytorch==1.3.* torchvision==0.4.*
-
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-WORKDIR /work
+# ------------------------------------------------------------
+
+
+
 CMD ["/bin/bash"]
 
