@@ -47,7 +47,7 @@ ENV LANG C.UTF-8
 
 # ------------------------------------------------------------
 
-
+RUN pip install tensorboard
 
 CMD ["/bin/bash"]
 
