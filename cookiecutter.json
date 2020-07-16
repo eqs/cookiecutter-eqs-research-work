@@ -5,6 +5,7 @@
     "project_description": "An awesome research project.",
 
     "use_nvidia_docker": "no",
+    "use_julia": "yes",
 
     "jupyter_port": 9000,
     "tensorboard_port": 9001
