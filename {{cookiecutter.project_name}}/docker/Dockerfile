@@ -35,7 +35,10 @@ RUN sudo bash -c "echo 'export PATH=/home/${user_name}/anaconda3/bin:$PATH' N> /
     rm $HOME/anaconda.sh
 
 ENV PATH $HOME/anaconda3/bin:$PATH
+
+{%- if cookiecutter.use_nvidia_docker == 'yes' -%}
 ENV LD_LIBRARY_PATH /usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+{%- endif -%}
 
 WORKDIR /work
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> /home/ubuntu/.bashrc
