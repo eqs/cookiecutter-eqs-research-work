@@ -46,9 +46,14 @@ RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> /home/ubunt
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-{%- if cookiecutter.use_julia == 'yes' -%}
+# Update Anaconda
+
+RUN conda update --force-reinstall
+RUN conda update anaconda
 
 # Install Julia
+
+{%- if cookiecutter.use_julia == 'yes' -%}
 
 RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz \
     -O $HOME/julia-1.4.2-linux-x86_64.tar.gz && \
@@ -56,7 +61,18 @@ RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.
     tar -xvzf julia-1.4.2-linux-x86_64.tar.gz
 ENV PATH $HOME/julia-1.4.2/bin:$PATH
 
-# Install Julia packages
+{%- endif %}
+
+# ------------- Install Python packages -------------
+
+RUN conda install -c conda-forge nodejs
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+
+RUN pip install tensorboard tensorboardX
+
+# ------------- Install Julia packages -------------
+
+{%- if cookiecutter.use_julia == 'yes' -%}
 
 RUN julia -e 'using Pkg; Pkg.add(["IJulia"]); using IJulia'
 RUN sudo apt-get install -y build-essential
@@ -70,9 +86,6 @@ RUN julia -e 'using Pkg; Pkg.add(["PDMats"]); using PDMats'
 
 {%- endif %}
 
-# Install Python packages
-
-RUN pip install tensorboard
 
 CMD ["/bin/bash"]
 
