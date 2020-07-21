@@ -48,8 +48,7 @@ ENV LANG C.UTF-8
 
 # Update Anaconda
 
-RUN conda update --force-reinstall
-RUN conda update anaconda
+RUN conda update --prefix $HOME/anaconda3 anaconda
 
 # Install Julia
 
