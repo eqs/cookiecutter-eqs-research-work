@@ -71,7 +71,7 @@ RUN pip install tensorboard tensorboardX
 
 # ------------- Install Julia packages -------------
 
-{%- if cookiecutter.use_julia == 'yes' -%}
+{%- if cookiecutter.use_julia == 'yes' %}
 
 RUN julia -e 'using Pkg; Pkg.add(["IJulia"]); using IJulia'
 RUN sudo apt-get install -y build-essential
