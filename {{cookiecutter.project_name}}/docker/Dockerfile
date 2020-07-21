@@ -52,7 +52,7 @@ RUN conda update --prefix $HOME/anaconda3 anaconda
 
 # Install Julia
 
-{%- if cookiecutter.use_julia == 'yes' -%}
+{%- if cookiecutter.use_julia == 'yes' %}
 
 RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz \
     -O $HOME/julia-1.4.2-linux-x86_64.tar.gz && \
