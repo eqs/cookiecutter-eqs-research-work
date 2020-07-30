@@ -2,7 +2,6 @@ version: '2.3'
 
 services:
     {{ cookiecutter.project_name}}-work:
-        runtime: nvidia
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -16,6 +15,9 @@ services:
             - "${TFBOARD_PORT}:6006"
         volumes:
             - .:/work
+{%- if cookiecutter.use_nvidia_docker == 'yes' %}
+        runtime: nvidia
         environment:
             NVIDIA_VISIBLE_DEVICES: '0'
+{%- endif %}
 
