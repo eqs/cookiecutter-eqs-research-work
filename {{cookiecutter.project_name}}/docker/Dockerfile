@@ -1,5 +1,5 @@
 {%- if cookiecutter.use_nvidia_docker == 'yes' -%}
-FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
 {%- else -%}
 FROM ubuntu:16.04
 {%- endif %}
@@ -38,7 +38,7 @@ RUN sudo bash -c "echo 'export PATH=/home/${user_name}/anaconda3/bin:$PATH' N> /
 ENV PATH $HOME/anaconda3/bin:$PATH
 
 {%- if cookiecutter.use_nvidia_docker == 'yes' %}
-ENV LD_LIBRARY_PATH /usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 {%- endif %}
 
 WORKDIR /work
