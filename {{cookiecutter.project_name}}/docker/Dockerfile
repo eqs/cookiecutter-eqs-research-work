@@ -37,8 +37,8 @@ RUN sudo bash -c "echo 'export PATH=/home/${user_name}/anaconda3/bin:$PATH' N> /
 
 ENV PATH $HOME/anaconda3/bin:$PATH
 
-{%- if cookiecutter.use_nvidia_docker == 'yes' -%}
-ENV LD_LIBRARY_PATH /usr/local/cuda-10.1/lib64:/usr/local/cuda-10.1/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+{%- if cookiecutter.use_nvidia_docker == 'yes' %}
+ENV LD_LIBRARY_PATH /usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 {%- endif %}
 
 WORKDIR /work
@@ -68,6 +68,7 @@ RUN conda install -c conda-forge nodejs
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 RUN pip install tensorboard tensorboardX
+RUN conda install -c pytorch torchvision
 
 # ------------- Install Julia packages -------------
 
