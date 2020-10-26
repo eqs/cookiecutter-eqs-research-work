@@ -68,7 +68,7 @@ RUN conda install -c conda-forge nodejs
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 RUN pip install tensorboard tensorboardX
-RUN conda install -c pytorch torchvision
+RUN conda install -c pytorch pytorch torchvision
 
 # ------------- Install Julia packages -------------
 
