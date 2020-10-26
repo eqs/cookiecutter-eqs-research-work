@@ -1,8 +1,10 @@
 {%- if cookiecutter.use_nvidia_docker == 'yes' -%}
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 {%- else -%}
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 {%- endif %}
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 MAINTAINER Satoshi Murashige
 
