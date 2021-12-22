@@ -1,12 +1,17 @@
 {%- if cookiecutter.use_nvidia_docker == 'yes' -%}
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04
 {%- else -%}
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 {%- endif %}
 
 MAINTAINER Satoshi Murashige
 
-RUN apt-get -y update --fix-missing && apt-get -y upgrade
+ENV TZ=Asia/Tokyo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get -y update --fix-missing
+RUN apt-get -y upgrade
+RUN apt-get -y install tzdata
 RUN apt-get -y install sudo wget bzip2 git vim cmake
 
 # settings
