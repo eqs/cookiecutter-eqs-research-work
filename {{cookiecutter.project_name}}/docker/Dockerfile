@@ -74,6 +74,7 @@ RUN conda install -c pytorch pytorch torchvision
 
 RUN apt-get install -y gcc-10 g++-10
 RUN pip install opencv-python
+RUN pip install opencv-contrib-python
 
 # ------------- Install Julia packages -------------
 
