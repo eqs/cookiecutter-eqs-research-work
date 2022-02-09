@@ -1,7 +1,7 @@
 {%- if cookiecutter.use_nvidia_docker == 'yes' -%}
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04
 {%- else -%}
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 {%- endif %}
 
 MAINTAINER Satoshi Murashige
@@ -31,14 +31,14 @@ USER ${user_name}
 
 # Intall Anaconda
 RUN sudo bash -c "echo 'export PATH=/home/${user_name}/anaconda3/bin:$PATH' N> /etc/profile.d/anaconda.sh" && \
-    wget --quiet https://repo.continuum.io/archive/Anaconda3-2019.03-Linux-x86_64.sh -O $HOME/anaconda.sh && \
+    wget --quiet https://repo.continuum.io/archive/Anaconda3-2021.11-Linux-x86_64.sh -O $HOME/anaconda.sh && \
     /bin/bash $HOME/anaconda.sh -b -p $HOME/anaconda3 && \
     rm $HOME/anaconda.sh
 
 ENV PATH $HOME/anaconda3/bin:$PATH
 
 {%- if cookiecutter.use_nvidia_docker == 'yes' %}
-ENV LD_LIBRARY_PATH /usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /usr/local/cuda-11.4/lib64:/usr/local/cuda-11.4/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 {%- endif %}
 
 WORKDIR /work
@@ -54,21 +54,21 @@ RUN conda update --prefix $HOME/anaconda3 anaconda
 
 {%- if cookiecutter.use_julia == 'yes' %}
 
-RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.4/julia-1.4.2-linux-x86_64.tar.gz \
-    -O $HOME/julia-1.4.2-linux-x86_64.tar.gz && \
+RUN wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.2-linux-x86_64.tar.gz \
+    -O $HOME/julia-1.7.2-linux-x86_64.tar.gz && \
     cd $HOME && \
-    tar -xvzf julia-1.4.2-linux-x86_64.tar.gz
-ENV PATH $HOME/julia-1.4.2/bin:$PATH
+    tar -xvzf julia-1.7.2-linux-x86_64.tar.gz
+ENV PATH $HOME/julia-1.7.2/bin:$PATH
 
 {%- endif %}
 
 # ------------- Install Python packages -------------
 
-RUN conda install -c conda-forge nodejs
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-
 RUN pip install tensorboard tensorboardX
 RUN conda install -c pytorch pytorch torchvision
+RUN pip install opencv-python
+RUN pip install opencv-contrib-python
+RUN pip install streamlit
 
 # ------------- Install Julia packages -------------
 
