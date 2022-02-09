@@ -6,6 +6,9 @@ FROM ubuntu:20.04
 
 MAINTAINER Satoshi Murashige
 
+ENV TZ={{ cookiecutter.timezone }}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get -y update --fix-missing && apt-get -y upgrade
 RUN apt-get -y install sudo wget bzip2 git vim cmake
 
