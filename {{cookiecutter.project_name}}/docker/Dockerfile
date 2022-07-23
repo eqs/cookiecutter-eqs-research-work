@@ -6,7 +6,7 @@ FROM ubuntu:20.04
 
 MAINTAINER Satoshi Murashige
 
-ENV TZ={{ cookiecutter.timezone }}
+ENV TZ={{ cookiecutter.time_zone }}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get -y update --fix-missing && apt-get -y upgrade
